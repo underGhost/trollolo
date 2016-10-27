@@ -16,5 +16,8 @@
   "license": "ISC",
   "dependencies": {
     "nightmare": "^2.8.1"
+  },
+  "devDependencies": {
+    "babel": "^6.5.2"
   }
 }

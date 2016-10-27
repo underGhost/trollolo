@@ -1,4 +1,4 @@
-module.exports = [
+[
   "Why doesn't McDonald's sell hotdogs?",
   "Are eyebrows considered facial hair?",
   "At a movie theater which arm rest is yours?",
@@ -58,4 +58,4 @@ module.exports = [
   "If a bald person works as a chef at a restaurant, do they have to wear a hairnet?",
   "If milk goes bad if not refrigerated, why does it not go bad inside the cow?",
   "What's the difference between normal ketchup and fancy ketchup?"
-];
+]
