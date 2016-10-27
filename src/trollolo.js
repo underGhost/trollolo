@@ -1,5 +1,5 @@
-#! /usr/bin/env node
 import Nightmare from 'nightmare';
+import path from 'path';
 import { formatArgs, formatMessage, getTrollMessage, debugParam } from './helpers';
 
 const args = process.argv;
@@ -10,7 +10,7 @@ let sitepage;
 let phInstance;
 let message;
 
-const messagesPath = argumentsObj['-c'] ? argumentsObj['-c'] : './.trollolo';
+const messagesPath = argumentsObj['-c'] ? argumentsObj['-c'] : path.join(__dirname, '../.trollolo');
 const site = argumentsObj['-t'];
 const selector = argumentsObj['-s'];
 const wait = argumentsObj['-w'] ? parseInt(argumentsObj['-t'], 10) : 500;
@@ -43,5 +43,5 @@ if(site && selector) {
   console.log('[TROLLING]', site);
   troll();
 } else {
-  console.log('NO SITE SPECIFIED');
+  console.log('[ERROR] You must specify a target and selector');
 }
