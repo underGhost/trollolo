@@ -19,7 +19,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var args = process.argv;
 var argumentsObj = (0, _helpers.formatArgs)(args);
 var nightmare = (0, _nightmare2.default)({
-  typeInterval: 1,
+  typeInterval: (0, _helpers.typeIntervalParam)(argumentsObj),
   show: (0, _helpers.debugParam)(argumentsObj)
 });
 var rl = _readline2.default.createInterface({
@@ -40,7 +40,7 @@ var message = void 0;
 var startTime = void 0;
 var timeDiff = void 0;
 
-function updateMessage(message) {
+var updateMessage = function updateMessage(message) {
   var t = processEnd - processStart;
   var minutes = Math.floor(t / (1000 * 60));
   var seconds = (t / 1000 % 60).toFixed(2);
@@ -52,9 +52,9 @@ function updateMessage(message) {
   _readline2.default.clearLine(rl, 0);
   _readline2.default.cursorTo(rl, 0);
   rl.write(message);
-}
+};
 
-function troll() {
+var troll = function troll() {
   startTime = process.hrtime();
   message = (0, _helpers.getTrollMessage)(messagesPath);
   updateMessage(message);
@@ -72,7 +72,7 @@ function troll() {
   }).catch(function (error) {
     console.error('Search failed:', error);
   });
-}
+};
 
 if (site && selector) {
   console.log('-------------------');

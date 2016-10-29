@@ -1,12 +1,12 @@
 import Nightmare from 'nightmare';
 import path from 'path';
 import readline from 'readline';
-import { formatArgs, formatMessage, getTrollMessage, debugParam } from './helpers';
+import { formatArgs, formatMessage, getTrollMessage, debugParam, typeIntervalParam } from './helpers';
 
 const args = process.argv;
 const argumentsObj = formatArgs(args);
 const nightmare = Nightmare( {
-  typeInterval: 1,
+  typeInterval: typeIntervalParam(argumentsObj),
   show: debugParam(argumentsObj)
 });
 const rl = readline.createInterface({
@@ -27,7 +27,7 @@ let message;
 let startTime;
 let timeDiff;
 
-function updateMessage(message) {
+const updateMessage = (message) => {
   const t = processEnd - processStart;
   const minutes = Math.floor(t / (1000*60));
   const seconds = ((t / 1000) % 60).toFixed(2);
@@ -42,7 +42,7 @@ function updateMessage(message) {
   rl.write(message);
 }
 
-function troll() {
+const troll = () => {
   startTime = process.hrtime();
   message = getTrollMessage(messagesPath);
   updateMessage(message);
@@ -51,10 +51,10 @@ function troll() {
     .type(selector, message)
     .type(selector, '\u000d')
     .wait(wait)
-    .evaluate(function () {
+    .evaluate(() => {
       return document.forms[0].innerHTML;
     })
-    .then(function (form) {
+    .then((form) => {
       if(form) {
         // Continue
         timeDiff = process.hrtime(startTime);
@@ -64,7 +64,7 @@ function troll() {
         // Dead End
       }
     })
-    .catch(function (error) {
+    .catch((error) => {
       console.error('Search failed:', error);
     });
 }
