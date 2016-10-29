@@ -36,5 +36,5 @@ function getTrollMessage(path) {
 }
 
 function debugParam(args) {
-  return args['--debug'] || args['-D'] ? { show: true } : '';
+  return args['--debug'] || args['-D'] ? true : false;
 }

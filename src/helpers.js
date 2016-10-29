@@ -22,5 +22,5 @@ export function getTrollMessage(path) {
 }
 
 export function debugParam(args) {
-  return args['--debug'] || args['-D'] ? { show: true } : ''
+  return args['--debug'] || args['-D'] ? true : false;
 }

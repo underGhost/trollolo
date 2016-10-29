@@ -1,23 +1,51 @@
 import Nightmare from 'nightmare';
 import path from 'path';
+import readline from 'readline';
 import { formatArgs, formatMessage, getTrollMessage, debugParam } from './helpers';
 
 const args = process.argv;
 const argumentsObj = formatArgs(args);
-const nightmare = Nightmare(debugParam(argumentsObj));
-
-let sitepage;
-let phInstance;
-let message;
+const nightmare = Nightmare( {
+  typeInterval: 1,
+  show: debugParam(argumentsObj)
+});
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
 
 const messagesPath = argumentsObj['-c'] ? argumentsObj['-c'] : path.join(__dirname, '../.trollolo');
 const site = argumentsObj['-t'];
 const selector = argumentsObj['-s'];
 const wait = argumentsObj['-w'] ? parseInt(argumentsObj['-t'], 10) : 500;
 
+const processStart = new Date().getTime();
+let processEnd;
+let sitepage;
+let phInstance;
+let message;
+let startTime;
+let timeDiff;
+
+function updateMessage(message) {
+  const t = processEnd - processStart;
+  const minutes = Math.floor(t / (1000*60));
+  const seconds = ((t / 1000) % 60).toFixed(2);
+  readline.moveCursor(rl, 0, -1);
+  readline.clearLine(rl, 0);
+  readline.cursorTo(rl, 0);
+  if(timeDiff)
+    rl.write(`Elapsed Time: ${minutes}m ${seconds}s / ${timeDiff[0]}s ${Math.floor(timeDiff[1]/1000000)}ms`);
+  readline.moveCursor(rl, 0, 1);
+  readline.clearLine(rl, 0);
+  readline.cursorTo(rl, 0);
+  rl.write(message);
+}
+
 function troll() {
+  startTime = process.hrtime();
   message = getTrollMessage(messagesPath);
-  console.log('[MESSAGE]', message);
+  updateMessage(message);
   nightmare
     .goto(site)
     .type(selector, message)
@@ -28,10 +56,12 @@ function troll() {
     })
     .then(function (form) {
       if(form) {
-        console.log('[CONTINUING]');
+        // Continue
+        timeDiff = process.hrtime(startTime);
+        processEnd = new Date().getTime();
         troll();
       } else {
-        console.log('[DEAD END] No forms found. Terminating.');
+        // Dead End
       }
     })
     .catch(function (error) {
@@ -40,7 +70,10 @@ function troll() {
 }
 
 if(site && selector) {
-  console.log('[TROLLING]', site);
+  console.log('-------------------');
+  console.log('      TROLLOLO     ');
+  console.log(site);
+  console.log('-------------------');
   troll();
 } else {
   console.log('[ERROR] You must specify a target and selector');
