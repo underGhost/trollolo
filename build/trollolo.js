@@ -30,7 +30,7 @@ var rl = _readline2.default.createInterface({
 var messagesPath = argumentsObj['-c'] ? argumentsObj['-c'] : _path2.default.join(__dirname, '../.trollolo');
 var site = argumentsObj['-t'];
 var selector = argumentsObj['-s'];
-var wait = argumentsObj['-w'] ? parseInt(argumentsObj['-t'], 10) : 500;
+var wait = argumentsObj['-w'] ? parseInt(argumentsObj['-w'], 10) : 500;
 
 var processStart = new Date().getTime();
 var processEnd = void 0;

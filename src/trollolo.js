@@ -17,7 +17,7 @@ const rl = readline.createInterface({
 const messagesPath = argumentsObj['-c'] ? argumentsObj['-c'] : path.join(__dirname, '../.trollolo');
 const site = argumentsObj['-t'];
 const selector = argumentsObj['-s'];
-const wait = argumentsObj['-w'] ? parseInt(argumentsObj['-t'], 10) : 500;
+const wait = argumentsObj['-w'] ? parseInt(argumentsObj['-w'], 10) : 500;
 
 const processStart = new Date().getTime();
 let processEnd;
