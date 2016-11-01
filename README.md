@@ -20,4 +20,4 @@ A simple trolling interface for websites. Loads targeted site in headless browse
         -w <integer> time to wait before executing next call
         -i <integer> Type interval. Default(100ms)
     Flags:
-        --debug or -d Debug toggle. Allows you to see commands being executed in a browser window.
+        --debug or -D Debug toggle. Allows you to see commands being executed in a browser window.
